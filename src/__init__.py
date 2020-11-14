@@ -1,7 +1,10 @@
+#!/usr/bin/python
 
 import time
 from src.Parsing import Parsing
 from src.test import VectorModel
+from src import ranking
+from src.ranking import score, generateRuns
 
 if __name__ == '__main__':
     #nltk.download('stopwords')

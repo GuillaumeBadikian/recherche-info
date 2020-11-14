@@ -27,7 +27,6 @@ class VectorModel:
             for(i,j) in self.vectorModel.items():
                 l.append([i[0],i[1],j])
             data = json.dumps(l)
-            #print(data)
             with open(dest, 'w') as f:
                 f.write(data)
     def fromJson(self,fr : str):
@@ -35,9 +34,6 @@ class VectorModel:
             vector = json.load(f)
             for i in vector:
                 self.vectorModel[(i[0],i[1])] = i[2]
-        # {
-        # docNo : { w : f } ,
-        # docNo : { w : f } ,
-        # docNo : { w : f } ,
-        # docNo : { w : f } ,
-        #}
+
+    def getDocsNo(self):
+        return list(dict.fromkeys([i[0] for i in self.vectorModel.keys()]))

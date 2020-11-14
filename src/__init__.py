@@ -28,7 +28,10 @@ if __name__ == '__main__':
         #v.toJson("test")
         v.fromJson("./data/data.json")
         print("time execution {}".format(time.time() - start))
-        print(v.vectorModel)
+
+        search = ["olive", "oil", "health", "benefit"]
+        scorelist = score(v.vectorModel,p.docParse.keys(),search)
+        generateRuns("2010001", "BenoitGauthierGuillaumeTheo", scorelist)
     #[print(i) for i in r]
 
 

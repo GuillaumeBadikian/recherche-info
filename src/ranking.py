@@ -28,7 +28,7 @@ def generateRuns(queryName, staffName, docScoresList):
     runs = ""
     for docScore in docScoresList:
         # currentRun = queryName + "Q0" + docScore[0] * coef + docScore[1] + staffName + path
-        currentRun = f'{queryName} Q0 {docScore[0]} {str(docScore[1])} {staffName} {path}'
+        currentRun = f'{queryName} Q0 {docScore[0]} {rank} {str(docScore[1])} {staffName} {path}'
         runs += currentRun + "\n"
         rank += 1
     f.write(runs)

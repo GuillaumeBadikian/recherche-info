@@ -96,10 +96,11 @@ class VectorModel:
                 self.vectorModel[(i[0], i[1])] = i[2]
 
     def getTf(self, docNo, term):
-        return 1 + math.log(self.corpus.get(docNo).get(term), 10)
+        return (math.log2(self.corpus.get(docNo).get(term))+1) / (math.log2(len(self.corpus.get(docNo))))
+        #return 1 + math.log(self.corpus.get(docNo).get(term), 10)
 
     def getIdf(self, term):
-        return math.log(len(self.corpus) / self.idf[term], 10)
+        return math.log2(1+ len(self.corpus) / self.idf[term])
 
     def getWeight(self, docNo, term):
         return self.getTf(docNo, term) * self.getIdf(term)
@@ -114,7 +115,7 @@ class Parser(VectorModel, Rank):
         self.idf = dict()
         self.vectorModel = dict()
 
-    def parse(self, corpus, lang="english", parser="[\w'/():\"@]*"):
+    def parse(self, corpus, lang="english", parser="[\w'/():\"@+-]*"):
         file = mmap.mmap(corpus.fileno(), 0, access=mmap.ACCESS_READ)
         doc = 0
 
@@ -142,5 +143,5 @@ class Parser(VectorModel, Rank):
         parse = re.compile(parser)
         words = parse.findall(document)
         #words = document.replace("\n", " ").split(" ")
-        filteredDoc = [w for w in words if not w in stop_words and w != '' and w.isalpha()]
+        filteredDoc = [w.lower() for w in words if not w in stop_words and w != '' and w.isalpha()]
         return dict((i, j) for (i, j) in Counter(filteredDoc).items())

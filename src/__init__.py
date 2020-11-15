@@ -1,10 +1,8 @@
 #!/usr/bin/python
 
 import time
-from src.Parsing import Parsing
-from src.test import VectorModel
-from src import ranking
-from src.ranking import score, generateRuns
+from src.Parser import Parser
+import pandas as pd
 
 if __name__ == '__main__':
     #nltk.download('stopwords')
@@ -14,24 +12,27 @@ if __name__ == '__main__':
 
     start = time.time()
     with open("./data/Text_Only_Ascii_Coll_MWI_NoSem","r") as f:
-        p = Parsing()
-        p.parse(f)
-        w = "States"
-        print("time execution {}".format(time.time() - start))
-        print(p.getTf("10003934", w))
-        print(p.getIdf(w))
-        #print(p.getWeight("10003934",w))
-        print("time execution {}".format(time.time()-start))
+
         start = time.time()
-        v = VectorModel(p)
-        #v.createVector()
-        #v.toJson("test")
-        v.fromJson("./data/data.json")
-        print("time execution {}".format(time.time() - start))
-        print(v.getDocsNo())
+        parser = Parser()
+        parser.parse(f)
+        print("time execution parsing {}".format(time.time() - start))
+        start = time.time()
+        parser.createVector()
+        print("time execution create vector {}".format(time.time() - start))
+        #parser.fromJson("./data/test.json")
+        start = time.time()
         search = ["olive", "oil", "health", "benefit"]
-        scorelist = score(v.vectorModel,p.docParse.keys(),search)
-        generateRuns("2010001", "BenoitGauthierGuillaumeTheo", scorelist)
+        parser.score(search)
+        parser.generateRuns(1456561,"guillaume")
+        print("time execution generate runs {}".format(time.time() - start))
+        #[print(t,u) for (t,u) in parser.vectorModel.items() if t[0]=="11735612"]
+        #pd.DataFrame(parser.docParse)
+        #print(pd.DataFrame(parser.getVectorModelList()))
+        vector = parser.getVectorModelList()
+        #df = pd.DataFrame(columns=parser.getDocsNo())
+        #[print(i[0]) for i in vector]
+
     #[print(i) for i in r]
 
 

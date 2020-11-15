@@ -1,6 +1,7 @@
 import json
 import math
 import mmap
+import os
 import re
 from collections import Counter
 
@@ -14,6 +15,14 @@ class Rank:
 
     def getDocsNo(self):
         return list(dict.fromkeys([i[0] for i in self.vectorModel.keys()]))
+
+    #def scoreAndGenerate(self,queryName, staffName, step, *query):
+    def scoreAndGenerate(self, staff,step,run, weighting,granularity, params, *query):
+        for i in query:
+           for(j,k) in i.items():
+               self.score(k)
+               self.generateRuns(staff,step,run,j,weighting,granularity,params)
+
 
     def score(self, query):
         self.scoreList = []
@@ -32,17 +41,19 @@ class Rank:
                 return
         self.scoreList.append(newScore)
 
-    def generateRuns(self,queryName, staffName):
-        f = open("runs/runX_" + staffName + ".txt", "w")
+    def generateRuns(self,staff,step,run,queryId, weighting='ltn',granularity = "articles", params=None):
+        #f = open("runs/run_" + staffName + ".txt", "w")
+        f = open("runs/run_{}_{}_{}_{}_{}_{}.txt".format(staff,step,run,weighting,granularity,params ), "a")
         rank = 1
         path = "/article[1]"
         coef = 1 / self.scoreList[0][1]
         runs = ""
         for docScore in self.scoreList:
             # currentRun = queryName + "Q0" + docScore[0] * coef + docScore[1] + staffName + path
-            currentRun = f'{queryName} Q0 {docScore[0]} {rank} {str(docScore[1])} {staffName} {path}'
+            currentRun = f'{queryId} {step} {docScore[0]} {rank} {str(docScore[1])} {staff} {path}'
             runs += currentRun + "\n"
             rank += 1
+            if rank>1500: break
         f.write(runs)
         f.close()
 

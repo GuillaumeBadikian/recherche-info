@@ -1,11 +1,12 @@
 # data
-src/data
-
+data/
+!data/README.md
 # Pycharm
 .idea
 
 # Runs
 runs/
+!runs/README.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

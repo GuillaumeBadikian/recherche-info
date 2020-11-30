@@ -6,7 +6,7 @@ import re
 from collections import Counter
 
 from nltk.corpus import stopwords
-
+from nltk.stem import WordNetLemmatizer
 
 class Rank:
     def __init__(self, vectorModel):
@@ -43,8 +43,9 @@ class Rank:
 
     def generateRuns(self,staff,step,run,queryId, weighting='ltn',granularity = "articles", params=None):
         #f = open("runs/run_" + staffName + ".txt", "w")
-        f = open("runs/run_{}_{}_{}_{}_{}_{}.txt".format(staff,step,run,weighting,granularity,params ), "a")
+        f = open("runs/{}_{}_{}_{}_{}_{}.txt".format(staff,step,run,weighting,granularity,params ), "a")
         rank = 1
+
         path = "/article[1]"
         coef = 1 / self.scoreList[0][1]
         runs = ""
@@ -142,6 +143,11 @@ class Parser(VectorModel, Rank):
         stop_words = set(stopwords.words(lang))
         parse = re.compile(parser)
         words = parse.findall(document)
+        #lemmatizer = WordNetLemmatizer()
+        #from nltk.stem import PorterStemmer
+        #ps = PorterStemmer()
+        #[ps.stem(w) for w in words]
+        #[lemmatizer.lemmatize(w) for w in words]
         #words = document.replace("\n", " ").split(" ")
         filteredDoc = [w.lower() for w in words if not w in stop_words and w != '' and w.isalpha()]
         return dict((i, j) for (i, j) in Counter(filteredDoc).items())

@@ -7,7 +7,6 @@ import pytest
 from nltk import WordNetLemmatizer
 
 from src.Compare import Compare
-from src.Parser import Parser
 import pandas as pd
 
 from src.ParserXml import ParserXmls, ParserXmls
@@ -45,8 +44,8 @@ if __name__ == '__main__':
     #run()
     print(time.time()-start)
 
-    files = ["runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_05_bm25_articles_k0.5_b0.3.txt",
-             "runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_10_bm25_articles_k1.2_b0.4.txt"]
+    files = ["runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_03_ltn_articles.txt",
+             "runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_04_ltn_articles.txt"]
     compare = Compare();
     df = compare.compare(files[0], files[1], 7, 50)
     print(df[:40])

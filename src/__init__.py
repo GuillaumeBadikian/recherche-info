@@ -32,13 +32,15 @@ if __name__ == '__main__':
         [2009085, ["operating", "system", "+mutual", "exclusion"]]
 
     ]
+    file = ""
     for q in query:
         r = rank.getBm25(q[1],k=k,b=b)
         run = Run("".join(config.staff), config.step, config.num,config.weighting, config.granularity,config.others)
-        run.createRun("../runs", r, q[0])
+        file = run.createRun("../runs", r, q[0])
     conf.incrementRun()
-    files = ["../runs/2021-01-04/GuillaumeBenoitGauthierTheo_04_16_bm25_articles_k0.8_b0.4.txt",
-             "../src/runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_07_bm25_articles_k0.8_b0.4.txt"]
+
+    files = ["../runs/runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_07_bm25_articles_k0.8_b0.4.txt",
+             file]
     compare = Compare();
     df = compare.compare(files[0], files[1], 7, 20)
     print(df.to_string(max_rows=1000))

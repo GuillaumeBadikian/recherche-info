@@ -9,6 +9,7 @@ class Config(object):
         def getConfig(self):
             with open(self.confFile, "r") as ymlfile:
                 cfg = yaml.load(ymlfile.read(), Loader=yaml.FullLoader)
+            ymlfile.close()
             return cfg
 
         def incrementRun(self):
@@ -16,16 +17,18 @@ class Config(object):
             with open(self.confFile, "w") as ymlfile:
                 conf['run']['num'] = conf['run']['num'] + 1
                 yaml.dump(conf, ymlfile)
+            ymlfile.close()
 
         def setOthers(self, others):
             conf = self.getConfig()
             with open(self.confFile, "w") as ymlfile:
                 conf['run']['others'] = others
                 yaml.dump(conf, ymlfile)
-
+            ymlfile.close()
         def setConfig(self, conf):
             with open(self.confFile, "w") as ymlfile:
                 yaml.dump(conf, ymlfile)
+            ymlfile.close()
             return self
 
     instance = None

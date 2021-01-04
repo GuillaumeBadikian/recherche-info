@@ -8,6 +8,8 @@ import math
 
 from src.parser import keras_tokenize
 
+def numberToString(n):
+    return str(n).zfill(2)
 
 class Run():
     def __init__(self, staff, step, run, weightingF, granularity, others=[]):
@@ -32,15 +34,15 @@ class Run():
         path = "/article[1]"
         for r in ranking:
             if rank > limit: break
-            current_run = f'{queryId} {self.step} {r[0]} {rank} {str(r[1])} {self.staff} {path}'
+            current_run = f'{queryId} {numberToString(self.step)} {r[0]} {rank} {str(r[1])} {self.staff} {path}'
             runs += current_run + "\n"
             rank += 1
 
         f.write(runs)
         f.close()
-
+        return "{}/{}".format(d, self.getFormat())
     def getFormat(self):
-        return "{}_{}_{}_{}_{}_{}.txt".format(self.staff, self.step, self.run, self.weightingFunc, self.granularity,
+        return "{}_{}_{}_{}_{}_{}.txt".format(self.staff, numberToString(self.step), numberToString(self.run), self.weightingFunc, self.granularity,
                                               '_'.join(self.others))
 
 

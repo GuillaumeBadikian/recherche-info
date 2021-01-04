@@ -1,6 +1,6 @@
 run:
   granularity: articles
-  num: 21
+  num: 24
   others:
   - k0.8
   - b0.4

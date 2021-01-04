@@ -11,8 +11,8 @@ if __name__ == '__main__':
 
     conf = Config()
 
-    k= 0.8
-    b=0.4
+    k= 0.6
+    b=0.6
     conf.setOthers(['k'+str(k), 'b'+str(b)])
     config = conf.getConfig()
     config = namedtuple("Conf", config['run'].keys())(*config['run'].values())

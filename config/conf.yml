@@ -1,9 +1,9 @@
 run:
   granularity: articles
-  num: 24
+  num: 29
   others:
-  - k0.8
-  - b0.4
+  - k0.6
+  - b0.6
   staff:
   - Guillaume
   - Benoit

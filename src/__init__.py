@@ -4,7 +4,7 @@ import time
 
 import nltk
 import pytest
-from nltk import WordNetLemmatizer
+from nltk import WordNetLemmatizer, PorterStemmer
 
 from src.Compare import Compare
 import pandas as pd
@@ -17,7 +17,7 @@ from src.xml_parser import XmlsParser
 from test import Test
 
 def run():
-    nb_run = "10"
+    nb_run = "11"
     parser = XmlsParser("../src/data/coll")
     parser.parse()
     rank = XmlRank(parser.corpusWcount)
@@ -31,7 +31,6 @@ def run():
         [2009085, ["operating", "system", "+mutual", "exclusion"]]
 
     ]
-
     for q in query:
         r = rank.getBm25(q[1])
         run = Run("GuillaumeBenoitGauthierTheo", "02", nb_run, "bm25", "articles", ["k1.2","b0.4"])
@@ -44,8 +43,8 @@ if __name__ == '__main__':
     #run()
     print(time.time()-start)
 
-    files = ["runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_03_ltn_articles.txt",
-             "runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_04_ltn_articles.txt"]
+    files = ["runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_05_bm25_articles_k0.5_b0.3.txt",
+             "runs/03-01-2021/GuillaumeBenoitGauthierTheo_02_11_bm25_articles_k1.2_b0.4.txt"]
     compare = Compare();
     df = compare.compare(files[0], files[1], 7, 50)
     print(df[:40])

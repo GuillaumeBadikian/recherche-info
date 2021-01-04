@@ -4,8 +4,24 @@ from collections import Counter
 from threading import Thread
 
 import xmltodict
+from keras_preprocessing.text import text_to_word_sequence
 from nltk import PorterStemmer, WordNetLemmatizer
 from nltk.corpus import stopwords
+
+
+def clean_text(text):
+    text = text.replace("\n", " ").replace("\r", " ")
+    punct_list = '\'!"#$%&()*+,-./:;<=>?@[\]^_{|}~' + '0123456789'
+    t = str.maketrans(dict.fromkeys(punct_list, " "))
+    text = text.translate(t)
+    return text
+
+
+def keras_tokenize(text):
+    text = clean_text(text)
+    tokens = text_to_word_sequence(text)
+    return tokens
+
 
 
 class XmlsParser():
@@ -25,6 +41,8 @@ class XmlsParser():
 
             thread.start()
             threads.append(thread)
+            #print(len(threads))
+            print("lecture des fichiers : {:3.2f}%".format((len(threads) / len(xmls)) *100), flush=True)
             if i>2 : break #remove
             #i+=1
         while len(threads) > 0:
@@ -44,6 +62,7 @@ class XmlParser(Thread):
         self.corpusWcount = corpusWcount
 
 
+
     def run(self):
         with open(self.xml, encoding="utf-8") as fd:
             tree = xmltodict.parse(fd.read(), xml_attribs=False, force_list=True)
@@ -54,8 +73,9 @@ class XmlParser(Thread):
             #words = parser.findall(document)
 
             #words = re.findall("[\w]*", document)
-            words = document.split()
-            ps = PorterStemmer()
+            #words = document.split()
+            text = clean_text(document)
+            words = text_to_word_sequence(text)
 
 
             filteredDoc = [w.lower() for w in words if not w in self.stop_words and w != '' and w.isalpha()]
@@ -63,6 +83,10 @@ class XmlParser(Thread):
             #print([w.lower() for w in words if not w in self.stop_words and w != ''])
             self.corpus[doc_id] = dict((i, j) for (i, j) in Counter(filteredDoc).items())
             self.corpusWcount[doc_id] = filteredDoc
+
+            #print(len(self.threads), self.xmls)
+            #print("avancement : {:3.2f}%".format((len(threads) / len(self.xmls)) * 100), flush=True)
+
 
     def getFullText(self,doc):
         l1 = []

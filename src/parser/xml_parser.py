@@ -9,7 +9,7 @@ import nltk
 import xmltodict
 from keras_preprocessing.text import text_to_word_sequence
 
-from src2.parser import clean_text, getFullText, search
+from src.parser import clean_text, getFullText, search
 from nltk.corpus import stopwords
 from colorama import Fore
 nltk.download('stopwords', quiet=True)

@@ -1,25 +1,26 @@
-#!/usr/bin/python
-
+import os
 import time
+from collections import namedtuple
 
-import nltk
-import pytest
-from nltk import WordNetLemmatizer, PorterStemmer
+from config.Config import Config
+from src import rank
+from src.compare import Compare
+from src.parser.xml_parser import XmlsParser
+from src.rank import Run, XmlRank
+if __name__ == '__main__':
 
-from src.Compare import Compare
-import pandas as pd
+    conf = Config()
 
-from src.ParserXml import ParserXmls, ParserXmls
-from xml.etree  import ElementTree
+    k= 0.8
+    b=0.4
+    conf.setOthers(['k'+str(k), 'b'+str(b)])
+    config = conf.getConfig()
+    config = namedtuple("Conf", config['run'].keys())(*config['run'].values())
 
-from src.rank import XmlRank, Run
-from src.xml_parser import XmlsParser
-from test import Test
-
-def run():
-    nb_run = "11"
-    parser = XmlsParser("../src/data/coll")
+    t = time.time()
+    parser = XmlsParser("../data/coll")
     parser.parse()
+    #print(time.time()-t)
     rank = XmlRank(parser.corpusWcount)
     query = [
         [2009011, ["olive", "oil", "health"]],
@@ -32,19 +33,12 @@ def run():
 
     ]
     for q in query:
-        r = rank.getBm25(q[1])
-        run = Run("GuillaumeBenoitGauthierTheo", "02", nb_run, "bm25", "articles", ["k1.2","b0.4"])
-        run.createRun("../src/runs", r, q[0])
-
-
-if __name__ == '__main__':
-
-    start = time.time()
-    #run()
-    print(time.time()-start)
-
-    files = ["runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_05_bm25_articles_k0.5_b0.3.txt",
-             "runs/03-01-2021/GuillaumeBenoitGauthierTheo_02_11_bm25_articles_k1.2_b0.4.txt"]
+        r = rank.getBm25(q[1],k=k,b=b)
+        run = Run("".join(config.staff), config.step, config.num,config.weighting, config.granularity,config.others)
+        run.createRun("../runs", r, q[0])
+    conf.incrementRun()
+    files = ["../runs/2021-01-04/GuillaumeBenoitGauthierTheo_04_16_bm25_articles_k0.8_b0.4.txt",
+             "../src/runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_07_bm25_articles_k0.8_b0.4.txt"]
     compare = Compare();
-    df = compare.compare(files[0], files[1], 7, 50)
-    print(df[:40])
+    df = compare.compare(files[0], files[1], 7, 20)
+    print(df.to_string(max_rows=1000))

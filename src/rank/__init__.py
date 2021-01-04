@@ -1,9 +1,13 @@
+from colorama import Fore
 from nltk import PorterStemmer
 from rank_bm25 import BM25Okapi
 import os
 from datetime import date
 import rank_bm25
 import math
+
+from src.parser import keras_tokenize
+
 
 class Run():
     def __init__(self, staff, step, run, weightingF, granularity, others=[]):
@@ -14,13 +18,15 @@ class Run():
         self.granularity = granularity
         self.others = others
 
-    def createRun(self, dir, ranking, queryId, limit=1500):
-        d = "{}/{}".format(dir, date.today().strftime("%d-%m-%Y"))
+    def createRun(self, dir, ranking, queryId, limit=1500, verbose = True):
+        d = "{}/{}".format(dir, date.today().strftime("%Y-%m-%d"))
         if not os.path.exists(d):
             os.makedirs(d)
-            print(d)
-        print(d)
-        f = open("{}/{}".format(d, self.getFormat()),'a')
+        if verbose:
+            print("{}Drafting of the classification of the request id {} {} {} in file:///{}/{} {}".format(
+                Fore.CYAN,Fore.GREEN,queryId, Fore.CYAN,
+                os.path.abspath(d).replace("\\", "/"),self.getFormat(), Fore.RESET))
+        f = open("{}/{}".format(d, self.getFormat()), 'a')
         rank = 1
         runs = ""
         path = "/article[1]"
@@ -43,17 +49,16 @@ class XmlRank():
         self.corpus = corpus
         self.bm25 = []
 
-    def getBm25(self, request):
-
-
-        #bm25 = rank_bm25.BM25L(self.corpus.values(), k1=1.2, b=0.75)
-        bm25 = BM25(k1=1.2, b=0.4)
+    def getBm25(self, request, k=1.5, b=0.75, d=0.5):
+        #bm25 = rank_bm25.BM25L(self.corpus.values(), k1=k, b=b, delta=d)
+        bm25 = BM25(k1=k, b=b)
         bm25.fit(self.corpus.values())
         doc_scores = bm25.search(request)
         #doc_scores = bm25.get_scores(request)
         ret = list(zip(self.corpus.keys(), doc_scores))
         self.bm25 = sorted(ret, key=lambda x: x[1], reverse=True)
         return self.bm25
+
 
 class BM25:
     """

@@ -1,4 +1,6 @@
 import glob
+import logging
+import os
 import sys
 import time
 from threading import Thread
@@ -10,7 +12,7 @@ from keras_preprocessing.text import text_to_word_sequence
 from src2.parser import clean_text, getFullText, search
 from nltk.corpus import stopwords
 from colorama import Fore
-nltk.download("stopwords")
+nltk.download('stopwords', quiet=True)
 
 
 class XmlsParser():
@@ -31,8 +33,9 @@ class XmlsParser():
             threads.append(thread)
             t2 = time.time()
             if verbose : #and (t2 - timer > sec or len(threads) == len(xmls)):
-                timer = t2
-                print("\r{}lecture des fichiers : {:3.2f}% {}".format(Fore.GREEN,(len(threads) / len(xmls)) * 100, xml), end='')
+                #timer = t2
+                percent = (len(threads) / len(xmls)) * 100
+                print("\r{}files reading : {} {} {} {:3.2f}%".format(Fore.CYAN,Fore.BLUE, xml, Fore.RED if percent <100 else Fore.LIGHTGREEN_EX, percent), end='')
 
         print(Fore.RESET)
         while len(threads) > 0:

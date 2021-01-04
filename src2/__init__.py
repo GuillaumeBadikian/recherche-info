@@ -1,3 +1,4 @@
+import os
 import time
 
 from src2 import rank
@@ -7,15 +8,16 @@ from src2.rank import Run, XmlRank
 
 if __name__ == '__main__':
 
-    num_run = "16"
+    num_run = "17"
     staff = "GuillaumeBenoitGauthierTheo"
     step = "04"
     weighting = "bm25"
     granularity = "articles"
     others = ["k0.8","b0.4"]
+    t = time.time()
     parser = XmlsParser("../data/coll")
     parser.parse()
-
+    #print(time.time()-t)
     rank = XmlRank(parser.corpusWcount)
     query = [
         [2009011, ["olive", "oil", "health"]],

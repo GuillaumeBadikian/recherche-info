@@ -23,7 +23,9 @@ class Run():
         if not os.path.exists(d):
             os.makedirs(d)
         if verbose:
-            print("{}Drafting of the classification of the request id {} {} {} in {} {} {}".format(Fore.CYAN,Fore.GREEN,queryId, Fore.CYAN,Fore.GREEN,d, Fore.RESET))
+            print("{}Drafting of the classification of the request id {} {} {} in file:///{}/{} {}".format(
+                Fore.CYAN,Fore.GREEN,queryId, Fore.CYAN,
+                os.path.abspath(d).replace("\\", "/"),self.getFormat(), Fore.RESET))
         f = open("{}/{}".format(d, self.getFormat()), 'a')
         rank = 1
         runs = ""

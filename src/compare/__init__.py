@@ -31,11 +31,11 @@ class Compare:
                     doc1 = [buff[i].split(" ")[2],  buff[i].split(" ")[3]]
                     doc2 = [l2.split(" ")[2],  l2.split(" ")[3]]
                     diff = int(l2.split(" ")[3]) - int(buff[i].split(" ")[3])
-                    res.append( {'doc1' : doc1[0] , 'pos' : doc1[1], 'doc2' : doc2[0] , 'pos2' : doc2[1], 'diff' : diff})
+                    res.append( {'doc1' : int(doc1[0]) , 'pos' : int(doc1[1]), 'doc2' : int(doc2[0]) , 'pos2' : int(doc2[1]), 'diff' : diff})
                     hasres = True
                     break
-            if not hasres:
-                res.append({'doc1':buff[i].split(" ")[2], 'pos': buff[i].split(" ")[3], 'doc2': 'unknown', 'pos2': 'unknown', 'diff': 'unknown'})
+            #if not hasres:
+            #    res.append({'doc1':buff[i].split(" ")[2], 'pos': buff[i].split(" ")[3], 'doc2': 'unknown', 'pos2': 'unknown', 'diff': 'unknown'})
             j += 1
             if i > (inf + (t * 1500)):
                 t += 1

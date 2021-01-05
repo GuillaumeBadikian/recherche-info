@@ -35,7 +35,7 @@ class XmlsParser():
             if verbose : #and (t2 - timer > sec or len(threads) == len(xmls)):
                 #timer = t2
                 percent = (len(threads) / len(xmls)) * 100
-                print("\r{}files reading : {} {} {} {:3.2f}%".format(Fore.CYAN,Fore.BLUE, xml.ljust(30), Fore.RED if percent <100 else Fore.LIGHTGREEN_EX, percent), end='')
+                print("\r{}files reading : {} {}  {} {:3.2f}%".format(Fore.CYAN,Fore.BLUE, xml.ljust(30), Fore.RED if percent <100 else Fore.LIGHTGREEN_EX, percent), end='')
 
         print(Fore.RESET)
         while len(threads) > 0:

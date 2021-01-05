@@ -1,9 +1,13 @@
 run:
+  b: 0.4
+  compare: 2021-01-05/GuillaumeBenoitGauthierTheo_04_39_bm25_articles_k0.8_b0.4.txt
+  d: 1
   granularity: articles
-  num: 29
+  k: 0.8
+  num: 50
   others:
-  - k0.6
-  - b0.6
+  - k0.8
+  - b0.4
   staff:
   - Guillaume
   - Benoit

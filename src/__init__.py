@@ -50,8 +50,8 @@ class Main:
         conf.incrementRun()
 
         files = ["../runs/{}".format(config.compare),
-                 "C:/Users/guill/Documents/fac/master/2A/RI/recherche-info/runs/2021-01-04/GuillaumeBenoitGauthierTheo_04_35_bm25_articles_k0.8_b0.4.txt"]
-        compare = Compare();
+                 file]
+        compare = Compare()
         df = compare.compare(files[0], files[1], 7, 20)
         df.style.apply(lambda i : 'color : red' if i < 0 else 'color : green', subset=['diff'])
         print(df.to_string(max_rows=1000))

@@ -61,6 +61,6 @@ class XmlParser(Thread):
             doc_id = search(tree, "id")[0]
             text = clean_text(document)
             words = text_to_word_sequence(text)
-            filtered_doc = [w.lower() for w in words if not w in self.stop_words and w != '' and w.isalpha()]
+            filtered_doc = [w.lower() for w in words if not w in self.stop_words and w != '' and w.isalpha() and len(w)>1]
             self.corpus[doc_id] = dict((i, j) for (i, j) in nltk.Counter(filtered_doc).items())
             self.corpusWcount[doc_id] = filtered_doc

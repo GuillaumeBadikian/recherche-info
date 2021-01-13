@@ -1,10 +1,10 @@
 run:
   b: 0.4
-  compare: 2021-01-05/GuillaumeBenoitGauthierTheo_04_39_bm25_articles_k0.8_b0.4.txt
+  compare: runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_07_bm25_articles_k0.8_b0.4.txt
   d: 1
   granularity: articles
   k: 0.8
-  num: 50
+  num: 53
   others:
   - k0.8
   - b0.4

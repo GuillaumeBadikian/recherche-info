@@ -3,8 +3,10 @@ from keras_preprocessing.text import text_to_word_sequence
 
 def clean_text(text):
     text = text.replace("\n", " ").replace("\r", " ")
-    punct_list = '\'!"#$%&()*+,-./:;<=>?@[\]^_{|}~' #+ '0123456789'
+
+    punct_list = '\'!"#$%&()*+,-./:;<=>?@[\]^_{|}~' + '0123456789'
     #punct_list = '\'!"#$%&()*+,./:;<=>?@[\]^_{|}~' + '0123456789'
+
     t = str.maketrans(dict.fromkeys(punct_list, ""))
     text = text.translate(t)
     return text

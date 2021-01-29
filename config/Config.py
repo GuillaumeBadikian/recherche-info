@@ -1,3 +1,5 @@
+import sys
+
 import yaml
 
 
@@ -7,10 +9,14 @@ class Config(object):
             self.confFile = "../config/conf.yml"
 
         def getConfig(self):
-            with open(self.confFile, "r") as ymlfile:
-                cfg = yaml.load(ymlfile.read(), Loader=yaml.FullLoader)
-            ymlfile.close()
-            return cfg
+            try:
+                with open(self.confFile, "r") as ymlfile:
+                    cfg = yaml.load(ymlfile.read(), Loader=yaml.FullLoader)
+                ymlfile.close()
+                return cfg
+            except:
+                sys.stderr.write("file {} not found".format(self.confFile))
+                exit(-1)
 
         def incrementRun(self):
             conf = self.getConfig()
@@ -25,6 +31,7 @@ class Config(object):
                 conf['run']['others'] = others
                 yaml.dump(conf, ymlfile)
             ymlfile.close()
+
         def setConfig(self, conf):
             with open(self.confFile, "w") as ymlfile:
                 yaml.dump(conf, ymlfile)

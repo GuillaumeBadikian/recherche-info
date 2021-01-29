@@ -1,17 +1,54 @@
+query:
+- 2009011:
+  - olive
+  - oil
+  - health
+- 2009036:
+  - notting
+  - hill
+  - film
+  - actors
+- 2009067:
+  - probabilistic
+  - models
+  - in
+  - information
+  - retrieval
+- 2009073:
+  - web
+  - link
+  - network
+  - analysis
+- 2009074:
+  - web
+  - ranking
+  - scoring
+  - algorithm
+- 2009078:
+  - supervised
+  - machine
+  - learning
+  - algorithm
+- 2009085:
+  - operating
+  - system
+  - mutual
+  - exclusion
 run:
-  b: 0.4
-  compare: runs/15-12-2020/GuillaumeBenoitGauthierTheo_02_07_bm25_articles_k0.8_b0.4.txt
+  b: 0.5
   d: 1
-  granularity: articles
-  k: 0.8
-  num: 53
-  others:
-  - k0.8
-  - b0.4
+  data:
+    file: data/data.json
+    overwrite: true
+    path: data/coll
+  granularity: element
+  k: 0.5
+  limit: 1500
+  num: 10
   staff:
   - Guillaume
   - Benoit
   - Gauthier
   - Theo
-  step: 4
+  step: 6
   weighting: bm25

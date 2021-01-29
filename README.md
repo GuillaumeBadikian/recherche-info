@@ -23,12 +23,13 @@
 run:
   b: 0.4 #bm25 b
   d: 1 #bm25 delta
-  granularity: articles
+data:
+    file: data/data.json # filename for indexing
+    overwrite: true # rewrite data.json if exist 
+    path: data/coll # data folder
+  granularity: articles # or element
   k: 0.8 #bm25 k1
   num: 44 #run number
-  others: #for report : unused, just for information
-  - k0.8 
-  - b0.4
   staff: #for report
   - Guillaume
   - Benoit
@@ -37,6 +38,11 @@ run:
   step: 4 #for step
   weighting: bm25 #method to use
   compare: filename #file to compare in runs/
+  limit: 1500 # limit of result per request
+query:
+    - id:
+      - word1
+      - words2
 ```
 
 #### execute program
@@ -45,4 +51,15 @@ cd recherche-info
 python -m manage
 ```
 
+#### Compare 2 runs:
+```shell script
+cd recherche-info/src/compare
+python -m compare_run
+``` 
+
+#### show MAgP
+```shell script
+cd recherche-info/src/compare
+python -m result
+``` 
 

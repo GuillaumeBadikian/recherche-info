@@ -49,13 +49,8 @@ class Rank:
 
     def generateRuns(self, staff, step, run, queryId, weighting='ltn', granularity="articles", params=None):
         # f = open("runs/run_" + staffName + ".txt", "w")
-        f = open("C:/Users/guill/Documents/fac/master/2A/RI/recherche-info/src/runs/{}_{}_{}_{}_{}_{}.txt".format(staff,
-                                                                                                                  step,
-                                                                                                                  run,
-                                                                                                                  weighting,
-                                                                                                                  granularity,
-                                                                                                                  params),
-                 "a")
+        f = open("C:/Users/guill/Documents/fac/master/2A/RI/recherche-info/src/runs/{}_{}_{}_{}_{}_{}.txt".format(
+            staff,step,run,  weighting,  granularity,params), "a")
         rank = 1
 
         path = "/article[1]"

@@ -30,8 +30,9 @@ class Result:
             for (w,x) in v.items():
                 if w==line:
                     info = k.split("_")
-                    res.append({'name' : str(info[1]), 'methods':info[4],'param': "_".join(info[5:]), line : float(x[1]) })
-                    ind.append("_".join(info[1:]).replace(".i.txt"," ")+line)
+                    if(info[1]=="res\GuillaumeBenoitGauthierTheo"):
+                        res.append({'name' : str(info[1]), 'methods':info[4],'param': "_".join(info[5:]), line : float(x[1]) })
+                        ind.append("_".join(info[1:]).replace(".i.txt"," ")+line)
                     #res.append({'name' : info[0] })
                     #print("_".join(k.split("_")[4:]),x[1])
         df = pd.DataFrame(res, columns=['name', 'methods', 'param', line], index=ind)
@@ -39,9 +40,9 @@ class Result:
             return df.query(filter)
         return df
 if __name__ == '__main__':
-    dir = "../../data/rendu/rendu5_res"
+    dir = "../../data/rendu/rendu9_res"
     res = Result(dir)
-    df = res.compareLine("MAgP","MAgP >0.18")
+    df = res.compareLine("MAgP","MAgP > 0.15")
     #print(df.sort_values(by=['MAgP']).to_string(max_cols=4,max_rows=1000))
     #print(df['name'])
     df2 = df.sort_values(by=['MAgP'])

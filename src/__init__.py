@@ -1,9 +1,11 @@
 import importlib
+import json
 import os
 import time
 from collections import namedtuple
 
 import pandas
+import yaml
 
 from config.Config import Config
 from src import rank
@@ -29,6 +31,10 @@ class Main:
         t = time.time()
         parser = XmlsParser("../data/coll")
         parser.parse()
+        with open("./data.json", "w") as fi:
+        #    yaml.dump(parser.corpusWcount, ymlfile)
+        #ymlfile.close()
+            json.dump(parser.corpusWcount,fi)
         #print(time.time()-t)
         rank = XmlRank(parser.corpusWcount)
         query = [
